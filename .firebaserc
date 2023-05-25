@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "sh-992": {
+      "hosting": {
+        "penta-value-users": [
+          "sh-992"
+        ]
+      }
+    }
+  }
+}
