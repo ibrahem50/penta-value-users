@@ -1,0 +1,12 @@
+.flex-box {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 70%;
+  gap: 1rem;
+  margin: auto;
+  align-items: center;
+}
+.image {
+  width: 50%;
+}
