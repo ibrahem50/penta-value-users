@@ -10,7 +10,16 @@
     </ng-container>
   </div>
   <div class="flex-box">
-    <img [src]="lastImage" class="image" />
+    <img
+      [src]="lastImage"
+      class="image"
+      *ngIf="
+        type.includes('jpg') || type.includes('jpeg') || type.includes('gif')
+      "
+    />
+    <video width="320" height="240" autoplay *ngIf="type.includes('mp4')">
+      <source [src]="lastImage" type="video/mp4" />
+    </video>
     <button (click)="downloadLastImage(filelist[filelist.length - 1])">
       Download
     </button>

@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 
 import { AngularFireDatabase } from "@angular/fire/database";
 import { AngularFireStorage } from "@angular/fire/storage";
-import { AngularFirestore } from "@angular/fire/firestore";
 
 @Component({
   selector: "app-root",
@@ -28,8 +27,8 @@ export class AppComponent implements OnInit {
           if (i == data.items.length - 1) {
             // this.filelist.sort(
             //   (a: any, b: any) =>
-            //     new Date(a.timeCreated).getTime() -
-            //     new Date(b.timeCreated).getTime()
+            //     new Date(a.timeCreated).getDay() -
+            //     new Date(b.timeCreated).getDay()
             // );
             this.setLast(res);
           }
@@ -40,14 +39,13 @@ export class AppComponent implements OnInit {
   downloadLastImage(data) {
     let newref = this.storage.ref(data.name);
     newref.getDownloadURL().subscribe((res) => {
-      this.lastImage = res;
       window.open(res, "_blank");
     });
   }
   setLast(data) {
     let newref = this.storage.ref(data.name);
+    this.type = data.fullPath;
     newref.getDownloadURL().subscribe((res) => {
-      // console.log(res);
       this.lastImage = res;
     });
   }
