@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { concatMap, finalize, switchMap, tap } from "rxjs/operators";
 
 import { AngularFireStorage } from "@angular/fire/storage";
-import { concat } from "rxjs";
+import { forkJoin } from "rxjs";
 
 @Component({
   selector: "app-root",
@@ -27,30 +27,35 @@ export class AppComponent implements OnInit {
     const ref = this.storage.ref("/");
     ref.listAll().subscribe((res) => {
       this.numberOfImages = res.items.length;
-      this.loadImageMetadata(res.items);
+      const observables = this.loadImageMetadata(res.items);
+      forkJoin(observables).subscribe({
+        next: () => {
+          this.filelist.sort((a, b) => {
+            const timeA = new Date(a.updated).getTime();
+            const timeB = new Date(b.updated).getTime();
+            return timeA - timeB;
+          });
+          this.setLast();
+          this.isLoading = false;
+        },
+      });
     });
   }
 
-  loadImageMetadata(item: any) {
-    item.map((item, index) => {
+  loadImageMetadata(items: any[]) {
+    return items.map((item) => {
+      this.isLoading = true;
       return this.storage
         .ref(item.name)
         .getMetadata()
         .pipe(
           tap((res) => {
             this.filelist.push(res);
-            this.filelist.sort((a, b) => {
-              const timeA = new Date(a.updated).getTime();
-              const timeB = new Date(b.updated).getTime();
-              return timeA - timeB;
-            });
           }),
           finalize(() => {
             this.isLoading = false;
-            if (index === this.numberOfImages - 1) this.setLast();
           })
-        )
-        .subscribe(() => {});
+        );
     });
   }
 
