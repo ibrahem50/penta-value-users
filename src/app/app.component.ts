@@ -35,10 +35,17 @@ export class AppComponent implements OnInit {
         }),
         finalize(() => {
           this.isLoading = false;
+          this.filelist.sort((a, b) => {
+            const timeA = new Date(a.timeCreated).getTime();
+            const timeB = new Date(b.timeCreated).getTime();
+            return timeA - timeB;
+          });
           this.setLast();
         })
       )
       .subscribe((res) => {
+        console.log(res);
+
         this.filelist.push(res);
       });
   }
