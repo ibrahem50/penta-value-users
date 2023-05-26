@@ -5,9 +5,10 @@ import { AppRoutingModule } from "./app-routing.module";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { environment } from "src/environments/environment";
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LoaderComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

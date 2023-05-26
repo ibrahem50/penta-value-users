@@ -1,27 +1,35 @@
-<div style="display: flex">
-  <div class="flex-box" style="flex-direction: column">
-    <ng-container *ngFor="let item of filelist; let i = index">
+<main class="container">
+  <div class="wrapper" *ngIf="!isLoading">
+    <div class="last">
+      <h1 class="title">The most recent data :</h1>
+      <img class="last-data" [srcset]="lastImage" src="assets/loading.jpeg" />
+      <video class="last-data" autoplay *ngIf="type.includes('mp4')">
+        <source [src]="lastImage" type="video/mp4" />
+      </video>
       <button
-        (click)="downloadLastImage(item)"
-        *ngIf="i != filelist.length - 1"
+        class="download-btn"
+        *ngIf="lastImage"
+        (click)="downloadLastImage(filelist[filelist.length - 1])"
       >
-        {{ item.name }}
+        View
       </button>
-    </ng-container>
+    </div>
+    <ul class="rest-data-wrapper">
+      <h1 class="title">Previous data :</h1>
+      <div class="rest-data">
+        <ng-container
+          *ngFor="let item of filelist | slice : 0 : -1; let i = index"
+        >
+          <li class="list">
+            <a class="link" (click)="downloadLastImage(item)">
+              {{ item.name }}
+            </a>
+          </li>
+        </ng-container>
+      </div>
+    </ul>
   </div>
-  <div class="flex-box">
-    <img
-      [src]="lastImage"
-      class="image"
-      *ngIf="
-        type.includes('jpg') || type.includes('jpeg') || type.includes('gif')
-      "
-    />
-    <video width="320" height="240" autoplay *ngIf="type.includes('mp4')">
-      <source [src]="lastImage" type="video/mp4" />
-    </video>
-    <button (click)="downloadLastImage(filelist[filelist.length - 1])">
-      Download
-    </button>
+  <div class="loader">
+    <app-loader *ngIf="isLoading"></app-loader>
   </div>
-</div>
+</main>
