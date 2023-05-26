@@ -44,8 +44,6 @@ export class AppComponent implements OnInit {
         })
       )
       .subscribe((res) => {
-        console.log(res);
-
         this.filelist.push(res);
       });
   }
