@@ -68,6 +68,7 @@ export class AppComponent implements OnInit {
     this.type = lastFile.fullPath;
     newref.getDownloadURL().subscribe((res) => {
       this.lastImage = res;
+      console.log(this.lastImage);
     });
   }
 }

@@ -8,7 +8,12 @@
         [srcset]="lastImage"
         src="assets/loading.jpeg"
       />
-      <video class="last-data" autoplay *ngIf="type.includes('mp4')">
+      <video
+        class="last-data"
+        autoplay
+        controls
+        *ngIf="type.includes('mp4') && lastImage"
+      >
         <source [src]="lastImage" type="video/mp4" />
       </video>
       <button
