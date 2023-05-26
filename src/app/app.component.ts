@@ -36,7 +36,6 @@ export class AppComponent implements OnInit {
             return timeA - timeB;
           });
           this.setLast();
-          this.isLoading = false;
         },
       });
     });
@@ -51,9 +50,6 @@ export class AppComponent implements OnInit {
         .pipe(
           tap((res) => {
             this.filelist.push(res);
-          }),
-          finalize(() => {
-            this.isLoading = false;
           })
         );
     });
@@ -71,6 +67,7 @@ export class AppComponent implements OnInit {
     let newref = this.storage.ref(lastFile.name);
     this.type = lastFile.fullPath;
     newref.getDownloadURL().subscribe((res) => {
+      this.isLoading = false;
       this.lastImage = res;
     });
   }
