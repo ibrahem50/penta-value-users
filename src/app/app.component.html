@@ -2,7 +2,12 @@
   <div class="wrapper" *ngIf="!isLoading">
     <div class="last">
       <h1 class="title">The most recent data :</h1>
-      <img class="last-data" [srcset]="lastImage" src="assets/loading.jpeg" />
+      <img
+        class="last-data"
+        *ngIf="!type.includes('mp4')"
+        [srcset]="lastImage"
+        src="assets/loading.jpeg"
+      />
       <video class="last-data" autoplay *ngIf="type.includes('mp4')">
         <source [src]="lastImage" type="video/mp4" />
       </video>
