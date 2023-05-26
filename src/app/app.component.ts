@@ -40,18 +40,17 @@ export class AppComponent implements OnInit {
           tap((res) => {
             this.filelist.push(res);
             this.filelist.sort((a, b) => {
-              const timeA = new Date(a.timeCreated).getTime();
-              const timeB = new Date(b.timeCreated).getTime();
+              const timeA = new Date(a.updated).getTime();
+              const timeB = new Date(b.updated).getTime();
               return timeA - timeB;
             });
           }),
           finalize(() => {
             this.isLoading = false;
+            if (index === this.numberOfImages - 1) this.setLast();
           })
         )
-        .subscribe(() => {
-          if (index === this.numberOfImages - 1) this.setLast();
-        });
+        .subscribe(() => {});
     });
   }
 
@@ -68,7 +67,6 @@ export class AppComponent implements OnInit {
     this.type = lastFile.fullPath;
     newref.getDownloadURL().subscribe((res) => {
       this.lastImage = res;
-      console.log(this.lastImage);
     });
   }
 }
