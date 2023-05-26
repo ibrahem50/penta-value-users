@@ -11,12 +11,12 @@ import { concat } from "rxjs";
 })
 export class AppComponent implements OnInit {
   filelist: any[] = [];
-  lastImage;
+  lastImage: any;
   type: string = "";
   isLoading: boolean = false;
-  currentIndex = 0;
-  currentImageUrl = "";
+
   constructor(private storage: AngularFireStorage) {}
+
   ngOnInit() {
     this.loadImagesSequentially();
   }
